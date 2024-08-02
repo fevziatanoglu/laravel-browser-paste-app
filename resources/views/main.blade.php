@@ -18,15 +18,27 @@
 
 
 
-    <main class=" h-screen w-screen ">
+    <main class="bg-gray-900 h-screen w-screen ">
 
-        <form action="{{ route('save.text') }}" method="POST" class="h-full w-full flex flex-col bg-black p-3 gap-2">
+        <form action="{{ route('save.text') }}" method="POST" class="h-full w-full flex flex-col p-3 gap-2">
             @csrf
             @method('POST')
             {{-- header inputs --}}
             <div class="w-full  flex flex-row gap-2 ">
+                {{-- File path --}}
+                <div class="flex flex-col justify-center w-full   rounded">
+                    <span class="block text-xs text-gray-300 ">
+                        File path
+                    </span>
 
-                <div class="flex flex-col justify-center w-full  bg-black rounded">
+                    <input type="text" name="file_path"
+                        class="w-full p-2 bg-transparent   border-2 border-blue-700 rounded-md ">
+                    @error('file_path')
+                        <span>{{ $message }}</span>
+                    @enderror
+                </div>
+                {{-- download limit --}}
+                <div class="flex flex-col justify-center w-full   rounded">
                     <span class="block text-xs text-gray-300 ">
                         Download limit
                     </span>
@@ -37,8 +49,8 @@
                         <span>{{ $message }}</span>
                     @enderror
                 </div>
-
-                <div class="flex flex-col justify-center w-full  bg-black rounded-md">
+                {{-- time limit --}}
+                <div class="flex flex-col justify-center w-full   rounded-md">
                     <span class="block text-xs text-gray-300 ">
                         Time limit (hours)
                     </span>
@@ -48,8 +60,8 @@
                         <span>{{ $message }}</span>
                     @enderror
                 </div>
-
-                <div class="flex flex-col justify-center      w-full  bg-black rounded-md">
+                {{-- password --}}
+                <div class="flex flex-col justify-center      w-full   rounded-md">
                     <span class="block text-xs text-gray-300 ">
                         Password
                     </span>
@@ -61,14 +73,14 @@
                 </div>
             </div>
             {{-- text area --}}
-            <textarea name="text" id="text" class="border-4 rounded-lg border-blue-700 focus:border-white p-2  w-full grow "
+            <textarea name="text" id="text" class="border-4 rounded-lg border-blue-700 bg-transparent focus:border-white p-2  w-full grow "
                 placeholder="Enter your text here"></textarea>
             {{-- buttom div --}}
             <div class=" p-3">
                 <button class="border-4 border-white px-3 py-1 font-bold rounded-lg text-center bg-blue-700"
                     type="submit">Save</button>
-                <a href={{ route('get.text') }}
-                    class="border-4 border-white px-3 py-1 font-bold rounded-lg text-center bg-blue-700">Get</a>
+                {{-- <a href={{ route('get.text') }}
+                    class="border-4 border-white px-3 py-1 font-bold rounded-lg text-center bg-blue-700">Get</a> --}}
 
 
 

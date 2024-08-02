@@ -8,5 +8,5 @@ Route::get('/', function () {
 });
 
 Route::post('/save' , [FileController::class , 'save'])->name('save.text');
-Route::delete('delete' , [FileController::class , 'delete'])->name('delete.text');
-Route::get('/get' , [FileController::class , 'get'])->name('get.text');
+Route::get('/{file_path}' , [FileController::class , 'get'])->name('get.text');
+// Route::get('delete/{file_path}' , [FileController::class , 'delete']);

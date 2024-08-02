@@ -16,7 +16,7 @@ class DeleteFile implements ShouldQueue
     use Queueable;
 
     protected $filePath;
-    
+
     public function __construct($filePath)
     {
         $this->filePath = $filePath;
@@ -24,10 +24,8 @@ class DeleteFile implements ShouldQueue
 
     public function handle(): void
     {
-        FileView::query()->delete([
-            "file_path" => "text.txt"
-        ]);
-        Storage::disk('local')->delete("test.txt");
-        dd(Storage::disk('local')->exists("test.txt"));
+        Log::info($this->filePath);
+        FileView::query()->where('file_path', $this->filePath)->delete();
+        Storage::disk('local')->delete($this->filePath);
     }
 }
