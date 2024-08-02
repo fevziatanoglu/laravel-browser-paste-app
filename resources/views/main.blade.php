@@ -16,24 +16,6 @@
 
 <body>
 
-    {{-- <form action="{{ route('save.text') }}" method="POST">
-        @csrf
-        @method('POST')
-        <textarea name="text" id="text" cols="30" rows="10"></textarea>
-        <button>Save</button>
-    </form>
-
-    <form action="{{ route('get.text') }}" method="GET">
-        @method('GET')
-        @csrf
-        <button>Get</button>
-    </form>
-
-    <form action="{{ route('delete.text') }}" method="POST">
-        @csrf
-        @method('POST')
-        <button>delete</button>
-    </form> --}}
 
 
     <main class=" h-screen w-screen ">
@@ -49,7 +31,7 @@
                         Download limit
                     </span>
 
-                    <input type="number" name="download_limit" value="1"
+                    <input type="number" name="download_limit"
                         class="w-full p-2 bg-transparent   border-2 border-blue-700 rounded-md ">
                     @error('download_limit')
                         <span>{{ $message }}</span>
@@ -73,7 +55,7 @@
                     </span>
                     <input type="text" name="password"
                         class="w-full p-2 bg-transparent   border-2 border-blue-700 rounded-md ">
-                        @error('password')
+                    @error('password')
                         <span>{{ $message }}</span>
                     @enderror
                 </div>
@@ -92,13 +74,7 @@
 
             </div>
         </form>
-        <form action="{{ route('delete.text') }}" method="post">
-            @csrf
-            @method('delete')
-            <button class="border-4 border-white px-3 py-1 font-bold rounded-lg text-center bg-blue-700">
-                Delete
-            </button>
-        </form>
+
     </main>
 
 
