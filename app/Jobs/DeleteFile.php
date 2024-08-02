@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\FileView;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
@@ -23,6 +24,9 @@ class DeleteFile implements ShouldQueue
 
     public function handle(): void
     {
+        FileView::query()->delete([
+            "file_path" => "text.txt"
+        ]);
         Storage::disk('local')->delete("test.txt");
         dd(Storage::disk('local')->exists("test.txt"));
     }

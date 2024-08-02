@@ -15,7 +15,91 @@
 </head>
 
 <body>
-  
+
+    {{-- <form action="{{ route('save.text') }}" method="POST">
+        @csrf
+        @method('POST')
+        <textarea name="text" id="text" cols="30" rows="10"></textarea>
+        <button>Save</button>
+    </form>
+
+    <form action="{{ route('get.text') }}" method="GET">
+        @method('GET')
+        @csrf
+        <button>Get</button>
+    </form>
+
+    <form action="{{ route('delete.text') }}" method="POST">
+        @csrf
+        @method('POST')
+        <button>delete</button>
+    </form> --}}
+
+
+    <main class=" h-screen w-screen ">
+
+        <form action="{{ route('save.text') }}" method="POST" class="h-full w-full flex flex-col bg-black p-3 gap-2">
+            @csrf
+            @method('POST')
+            {{-- header inputs --}}
+            <div class="w-full  flex flex-row gap-2 ">
+
+                <div class="flex flex-col justify-center w-full  bg-black rounded">
+                    <span class="block text-xs text-gray-300 ">
+                        Download limit
+                    </span>
+
+                    <input type="number" name="download_limit" value="1"
+                        class="w-full p-2 bg-transparent   border-2 border-blue-700 rounded-md ">
+                    @error('download_limit')
+                        <span>{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="flex flex-col justify-center w-full  bg-black rounded-md">
+                    <span class="block text-xs text-gray-300 ">
+                        Time limit (hours)
+                    </span>
+                    <input type="number" name="time_limit" value="1"
+                        class="w-full p-2 bg-transparent   border-2 border-blue-700 rounded-md ">
+                    @error('time_limit')
+                        <span>{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="flex flex-col justify-center      w-full  bg-black rounded-md">
+                    <span class="block text-xs text-gray-300 ">
+                        Password
+                    </span>
+                    <input type="text" name="password"
+                        class="w-full p-2 bg-transparent   border-2 border-blue-700 rounded-md ">
+                        @error('password')
+                        <span>{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            {{-- text area --}}
+            <textarea name="text" id="text" class="border-4 rounded-lg border-blue-700 focus:border-white p-2  w-full grow "
+                placeholder="Enter your text here"></textarea>
+            {{-- buttom div --}}
+            <div class=" p-3">
+                <button class="border-4 border-white px-3 py-1 font-bold rounded-lg text-center bg-blue-700"
+                    type="submit">Save</button>
+                <a href={{ route('get.text') }}
+                    class="border-4 border-white px-3 py-1 font-bold rounded-lg text-center bg-blue-700">Get</a>
+
+
+
+            </div>
+        </form>
+        <form action="{{ route('delete.text') }}" method="post">
+            @csrf
+            @method('delete')
+            <button class="border-4 border-white px-3 py-1 font-bold rounded-lg text-center bg-blue-700">
+                Delete
+            </button>
+        </form>
+    </main>
 
 
 
