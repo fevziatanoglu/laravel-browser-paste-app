@@ -15,23 +15,19 @@ class FileController extends Controller
     public function save(Request $request)
     {
         $request = $request->validate([
-            'file_path' => 'required|string|min:3|max:30',
             'text' => 'required|string',
             'time_limit' => 'required|numeric|min:1|max:200',
             'download_limit' => 'nullable|numeric',
             'password' => 'nullable|string',
         ]);
-        if(FileView::where('file_path', $request['file_path'])->exists()){
-            dd('this file path already exists');    
-        }
+
         $fileView = FileView::query()->create([
-            'file_path' => $request['file_path'],
             'view_limit' => $request['download_limit'],
             'view_count' => 0,
             'password' => bcrypt($request['password']),
         ]);
-        Storage::disk('local')->put($request['file_path'], $request['text']);
-        DeleteFile::dispatch($request['file_path'])->delay(now()->addHours((float)$request['time_limit']));
+        Storage::disk('local')->put($fileView->file_path, $request['text']);
+        DeleteFile::dispatch($fileView->file_path)->delay(now()->addHours((float)$request['time_limit']));
         return view('get-page' , ['file_view' => $fileView , 'time_limit' => $request['time_limit']]);
     }
 
@@ -50,7 +46,7 @@ class FileController extends Controller
             if($request->has('password')){
 
 
-                if(!Hash::check($request['password'] , $fileView->password)){
+                if(!Hash::check($request->input('password') , $fileView->password)){
                     dd("wrong password");
                 }
 

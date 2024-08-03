@@ -25,18 +25,7 @@
             @method('POST')
             {{-- header inputs --}}
             <div class="w-full  flex flex-row gap-2 ">
-                {{-- File path --}}
-                <div class="flex flex-col justify-center w-full   rounded">
-                    <span class="block text-xs text-gray-300 ">
-                        File path
-                    </span>
 
-                    <input type="text" name="file_path"
-                        class="w-full p-2 bg-transparent   border-2 border-blue-700 rounded-md ">
-                    @error('file_path')
-                        <span>{{ $message }}</span>
-                    @enderror
-                </div>
                 {{-- download limit --}}
                 <div class="flex flex-col justify-center w-full   rounded">
                     <span class="block text-xs text-gray-300 ">
@@ -65,7 +54,7 @@
                     <span class="block text-xs text-gray-300 ">
                         Password
                     </span>
-                    <input type="text" name="password"
+                    <input type="password" id="password" name="password"
                         class="w-full p-2 bg-transparent   border-2 border-blue-700 rounded-md ">
                     @error('password')
                         <span>{{ $message }}</span>

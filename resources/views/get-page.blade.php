@@ -1,4 +1,5 @@
 @vite('resources/css/app.css')
+{{$file_view}}
 <div class="h-screen w-screen  flex flex-col justify-center items-center gap-10 ">
     <div class="flex flex-row gap-3 text-6xl font-bold">
         <p>You can get your file at</p>
