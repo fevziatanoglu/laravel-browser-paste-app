@@ -10,7 +10,7 @@ class FileView extends Model
 {
 
     use HasFactory;
-    protected $fillable = ['file_path', 'view_count', 'view_limit'];
+    protected $fillable = ['file_path', 'view_count', 'view_limit' , 'password'];
 
     protected static function boot()
     {

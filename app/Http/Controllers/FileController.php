@@ -17,18 +17,20 @@ class FileController extends Controller
         $request = $request->validate([
             'text' => 'required|string',
             'time_limit' => 'required|numeric|min:1|max:200',
-            'download_limit' => 'nullable|numeric',
+            'view_limit' => 'nullable|numeric',
             'password' => 'nullable|string',
         ]);
-
         $fileView = FileView::query()->create([
-            'view_limit' => $request['download_limit'],
+            'view_limit' => $request['view_limit'],
             'view_count' => 0,
-            'password' => bcrypt($request['password']),
-        ]);
+            'password' => $request['password'] ? bcrypt($request['password']) : null,
+        ])
+        // to do not return password
+        ->makeHidden(['password']);
+
         Storage::disk('local')->put($fileView->file_path, $request['text']);
         DeleteFile::dispatch($fileView->file_path)->delay(now()->addHours((float)$request['time_limit']));
-        return view('get-page' , ['file_view' => $fileView , 'time_limit' => $request['time_limit']]);
+        return view('pages/after-save' , ['fileView' => $fileView , 'time_limit' => $request['time_limit']]);
     }
 
     public function get($file_path , Request $request)
@@ -38,7 +40,6 @@ class FileController extends Controller
                 'file_path' , $file_path
             )->first();
 
-            
             if(!isset($fileView)) {
                 dd('file not found');
             }
@@ -71,14 +72,8 @@ class FileController extends Controller
                     dd('limit reached , file deleted');
                 }
             }
-            
-            dd(Storage::disk('local')->get($request['file_path']), Storage::disk('local')->exists($request['file_path']), $fileView->view_count, $fileView->view_limit, $fileView->password);
-            // return Storage::disk('local')->exists($request['file_path'])? Storage::disk('local')->get($request['file_path']) : "File not found.";
+            return view('pages.file' , ['fileView' => $fileView , 'fileData' => Storage::disk('local')->get($request['file_path'])]);
         }
 
-    // public function delete($file_path)
-    // {
-    //     DeleteFile::dispatch($file_path);
-    //     dd( FileView::where('file_path', $file_path)->exists());
-    // }
+  
 }
