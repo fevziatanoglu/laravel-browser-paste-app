@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('file_views', function (Blueprint $table) {
             $table->id();
             $table->string('file_path')->unique();
+            $table->date('burn_at');
             $table->integer('view_count')->default(0);
             $table->integer('view_limit')->nullable()->default(null);
             $table->string('password')->nullable();

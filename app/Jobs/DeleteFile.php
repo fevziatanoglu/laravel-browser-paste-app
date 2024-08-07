@@ -15,17 +15,13 @@ class DeleteFile implements ShouldQueue
 {
     use Queueable;
 
-    protected $filePath;
-
-    public function __construct($filePath)
-    {
-        $this->filePath = $filePath;
-    }
 
     public function handle(): void
     {
-        Log::info($this->filePath);
-        FileView::query()->where('file_path', $this->filePath)->delete();
-        Storage::disk('local')->delete($this->filePath);
+        $query = FileView::query()->where('burn_at', '<', now());
+        foreach ($query->cursor() as $file){
+            $file->delete();
+        }
+        
     }
 }
